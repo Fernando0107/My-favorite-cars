@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Cars.Models
 {
-    public class Cars
+    public class Car
     {
         [Key]
         public int Id { get; set; }
@@ -12,6 +12,7 @@ namespace Cars.Models
         public string Brand { get; set; }
         [Required]
         public string Model { get; set; }
+        public string Url { get; set; }
         public string Motor { get; set; }
 
     }
