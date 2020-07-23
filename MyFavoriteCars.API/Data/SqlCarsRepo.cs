@@ -25,6 +25,20 @@ namespace Cars.Data
                 _context.Cars.Add(car);
             }
         }
+
+        public void DeleteCar(Car car)
+        {
+            if (car == null)
+            {
+                throw new ArgumentNullException(nameof(car));
+            }
+            else
+            {
+                _context.Cars.Remove(car);
+            }
+
+        }
+
         // Get all cars from CarsContext (DB)
         public IEnumerable<Car> GetAllCars()
         {

@@ -124,6 +124,28 @@ namespace Cars.Controllers
 
         }
 
+        // DELETE api/cars/{id}
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCar(int id)
+        {
+            var carModelFromRepo = _repo.GetCarById(id);
+
+            if (carModelFromRepo == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _repo.DeleteCar(carModelFromRepo);
+                _repo.SaveChanges();
+
+                return NoContent();
+            }
+
+        }
+
+
+
     }
 
 }

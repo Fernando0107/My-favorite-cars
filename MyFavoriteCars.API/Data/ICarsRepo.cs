@@ -18,6 +18,9 @@ namespace Cars.Data
         void CreateCar(Car car);
         // PUT
         void UpdateCar(Car car);
+        // DELETE
+        void DeleteCar(Car car);
+
 
     }
 
