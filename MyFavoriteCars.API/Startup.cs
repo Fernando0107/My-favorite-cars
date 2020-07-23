@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 
 namespace MyFavoriteCars.API
 {
@@ -29,9 +30,13 @@ namespace MyFavoriteCars.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CarsContext>(x => x.UseSqlServer(Configuration.GetConnectionString("CarsConnection")));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(x =>
+            {
+                x.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ICarsRepo, SqlCarsRepo>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

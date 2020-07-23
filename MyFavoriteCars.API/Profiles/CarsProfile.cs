@@ -16,6 +16,8 @@ namespace Cars.Profiles
             CreateMap<CarCreateDto, Car>();
             // Update
             CreateMap<CarUpdateDto, Car>();
+            // Patch
+            CreateMap<Car, CarUpdateDto>();
         }
 
     }

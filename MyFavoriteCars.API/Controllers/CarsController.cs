@@ -3,6 +3,7 @@ using AutoMapper;
 using Cars.Data;
 using Cars.Dtos;
 using Cars.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cars.Controllers
@@ -86,6 +87,41 @@ namespace Cars.Controllers
                 return NoContent();
 
             }
+        }
+
+        // Patch api/cars/{id}
+        [HttpPatch("{id}")]
+
+        public ActionResult PartialCarUpdate(int id, JsonPatchDocument<CarUpdateDto> patchDoc)
+        {
+            var carModelFromRepo = _repo.GetCarById(id);
+
+            if (carModelFromRepo == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var carToPatch = _mapper.Map<CarUpdateDto>(carModelFromRepo);
+                patchDoc.ApplyTo(carToPatch, ModelState);
+
+                if (!TryValidateModel(carToPatch))
+                {
+                    return ValidationProblem(ModelState);
+                }
+                else
+                {
+                    _mapper.Map(carToPatch, carModelFromRepo);
+                    _repo.UpdateCar(carModelFromRepo);
+
+                    _repo.SaveChanges();
+
+                    return NoContent();
+                }
+
+
+            }
+
         }
 
     }
