@@ -65,6 +65,29 @@ namespace Cars.Controllers
 
         }
 
+        // PUT api/cars/{id}
+        [HttpPut("{id}")]
+        public ActionResult UpdateCar(int id, CarUpdateDto carUpdateDto)
+        {
+            var carModelFromRepo = _repo.GetCarById(id);
+
+            if (carModelFromRepo == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _mapper.Map(carUpdateDto, carModelFromRepo);
+
+                _repo.UpdateCar(carModelFromRepo);
+
+                _repo.SaveChanges();
+
+                return NoContent();
+
+            }
+        }
+
     }
 
 }

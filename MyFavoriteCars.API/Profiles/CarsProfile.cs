@@ -9,10 +9,13 @@ namespace Cars.Profiles
         public CarsProfile()
         {
             // Source -> destination(Target)
+
             // Get
             CreateMap<Car, CarReadDto>();
             // Post
             CreateMap<CarCreateDto, Car>();
+            // Update
+            CreateMap<CarUpdateDto, Car>();
         }
 
     }
