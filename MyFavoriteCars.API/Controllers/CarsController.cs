@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using AutoMapper;
 using Cars.Data;
+using Cars.Dtos;
 using Cars.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,39 +14,57 @@ namespace Cars.Controllers
     public class CarsController : ControllerBase
     {
         private readonly ICarsRepo _repo;
+        private readonly IMapper _mapper;
+
         // Constructor -> Depency Injection Method
-        public CarsController(ICarsRepo repository)
+        public CarsController(ICarsRepo repository, IMapper mapper)
         {
             _repo = repository;
+            _mapper = mapper;
         }
-
-
 
         // GET api/cars
         [HttpGet]
-        public ActionResult<IEnumerable<Car>> GetAllCars()
+        public ActionResult<IEnumerable<CarReadDto>> GetAllCars()
         {
             var commandItems = _repo.GetAllCars();
 
-            return Ok(commandItems);
-
-
+            return Ok(_mapper.Map<IEnumerable<CarReadDto>>(commandItems));
         }
 
         // GET api/cars/{id}
-        [HttpGet("{id}")]
-        public ActionResult<Car> GetCarById(int id)
+        [HttpGet("{id}", Name = "GetCarById")]
+        public ActionResult<CarReadDto> GetCarById(int id)
         {
             var commandItems = _repo.GetCarById(id);
 
-            return Ok(commandItems);
+            if (commandItems != null)
+            {
+                return Ok(_mapper.Map<CarReadDto>(commandItems));
+            }
+            else
+            {
+                return NotFound();
+            }
 
         }
 
+        // POST api/cars/
+        [HttpPost]
+        public ActionResult<CarReadDto> CreateCar(CarCreateDto carCreateDto)
+        {
+            var carModel = _mapper.Map<Car>(carCreateDto);
 
+            _repo.CreateCar(carModel);
+
+            _repo.SaveChanges();
+
+            var carReadDto = _mapper.Map<CarReadDto>(carModel);
+
+            return CreatedAtRoute(nameof(GetCarById), new { Id = carReadDto.Id }, carReadDto);
+
+        }
 
     }
-
-
 
 }

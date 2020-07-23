@@ -7,8 +7,17 @@ namespace Cars.Data
     public interface ICarsRepo
     {
         // List of the methods signatures that we are going to provide 
+
+        // Save Changes in the database
+        bool SaveChanges();
+        // GET
         IEnumerable<Car> GetAllCars();
+        // GET by Id
         Car GetCarById(int id);
+        // POST
+        void CreateCar(Car car);
+        // PUT
+        void UpdateCar(Car car);
 
     }
 
