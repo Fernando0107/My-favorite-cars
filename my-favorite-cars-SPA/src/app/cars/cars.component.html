@@ -4,11 +4,36 @@
 
   <hr class="my-3">
 
-  <p>If you want to add a car, click the button below...</p>
+  <p>If you want to add a car, fill the form below...</p>
 
-  <input type="button" class="btn btn-success" value="Add a new car!"> 
+<!--  <input type="button" class="btn btn-success" value="Add a new car!"> 
   <br>
   <br>
+
+This is an example text that won't be displayed in the browser-->
+
+<form (submit)="postCar(car.value, brand.value, model.value, url.value, motor.value)">
+  <div class="row">
+    <div class="col">
+      <label for="exampleCarName">Car Name:</label>
+      <input #car type="text" class="form-control" placeholder="Name">
+      <label for="exampleCarModel">Car model:</label>
+      <input #model type="text" class="form-control" placeholder="Model">
+    </div>
+    <div class="col">
+      <label for="exampleCarBrand">Car brand:</label>
+      <input #brand type="text" class="form-control" placeholder="Brand">
+      <label for="exampleCarUrl">Car motor:</label>
+      <input #motor type="text" class="form-control" placeholder="Motor">
+    </div>
+  </div>
+  <label for="exampleCarBrand">Car Url:</label>
+  <input #url type="text" class="form-control" placeholder="Url">
+  <br>
+  <button type="submit" class="btn btn-success">Add a new car!</button>
+</form>
+<br>
+<br>
 
 <div class="row row-cols-1 row-cols-md-5">
   <div class="col mb-4" *ngFor="let car of cars">
@@ -19,7 +44,8 @@
         <p class="card-text">Motor: {{car.motor}}</p>
       </div>
         <div class="card-footer" align="center">
-            <input type="button" class="btn btn-danger" value="Delete" (click)="deleteCar(car.id)">
+            <input type="button" class="btn btn-warning btn-block" value="Edit"  style="float: left;">
+            <input type="button" class="btn btn-danger btn-block" value="Delete"  style="float: right;" (click)="deleteCar(car.id)">
         </div>
     </div>
   </div>

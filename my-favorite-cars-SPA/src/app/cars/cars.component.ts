@@ -7,55 +7,49 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./cars.component.css'],
 })
 export class CarsComponent implements OnInit {
+  // Variables
   cars: any;
-  today: number = Date.now();
-  xi: any;
-  x2: any;
+  alm: any;
+  cars_url = 'http://localhost:5000/api/cars/';
 
-  test: {
-    id: 1;
-    name: 'Lamborghini Huracan';
-    url: 'https://cdn.carbuzz.com/gallery-images/2020-lamborghini-huracan-evo-front-angle-view-carbuzz-529237-1600.jpg';
-    motor: 'V10';
-  };
-
+  // Constructor
   constructor(private http: HttpClient) {}
 
+  // On init
   ngOnInit(): void {
     this.getCars();
-    //this.postCar();
   }
 
-  anytest(te) {
-    console.log(te);
-  }
-
-  postCar() {
-    interface CarsInter {
-      id: number;
-      name: string;
-    }
+  // Methods
+  postCar(
+    car: string,
+    _brand: string,
+    _model: string,
+    _url: string,
+    _motor: string
+  ) {
     this.http
-      .post<CarsInter>('http://localhost:5000/api/cars/', {
-        name: 'Lamborghini Huracan Spyder',
-        brand: 'Lamborghini',
-        model: '2020',
-        url:
-          'https://cdn.carbuzz.com/gallery-images/2020-lamborghini-huracan-evo-spyder-carbuzz-551818.jpg',
-        motor: 'V10',
+      .post<CarsInter>(this.cars_url, {
+        name: car,
+        brand: _brand,
+        model: _model,
+        url: _url,
+        motor: _motor,
       })
       .subscribe(
         (response) => {
-          this.xi = response.id;
+          this.alm = response.id;
+          console.log(this.alm);
         },
         (error) => {
           console.log(error);
         }
       );
+    window.location.reload();
   }
 
   getCars() {
-    this.http.get('http://localhost:5000/api/cars/').subscribe(
+    this.http.get(this.cars_url).subscribe(
       (response) => {
         this.cars = response;
       },
@@ -66,9 +60,9 @@ export class CarsComponent implements OnInit {
   }
 
   deleteCar(id) {
-    this.http.delete<any>('http://localhost:5000/api/cars/' + id).subscribe(
+    this.http.delete<any>(this.cars_url + id).subscribe(
       (res) => {
-        this.x2 = res.id;
+        this.alm = res.id;
       },
       (error) => {
         console.log(error);
@@ -76,4 +70,35 @@ export class CarsComponent implements OnInit {
     );
     window.location.reload();
   }
+
+  updateCar(
+    id,
+    car: string,
+    _brand: string,
+    _model: string,
+    _url: string,
+    _motor: string
+  ) {
+    this.http
+      .put<any>(this.cars_url + id, {
+        name: car,
+        brand: _brand,
+        model: _model,
+        url: _url,
+        motor: _motor,
+      })
+      .subscribe(
+        (resp) => {
+          this.alm = resp;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+}
+
+interface CarsInter {
+  id: number;
+  name: string;
 }

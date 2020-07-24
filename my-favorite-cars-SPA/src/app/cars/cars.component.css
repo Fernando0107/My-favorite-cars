@@ -3,3 +3,17 @@
   height: 15vw;
   object-fit: cover;
 }
+
+input {
+  text-align: center;
+}
+
+.center-block {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+form {
+  display: inline-block;
+}
