@@ -71,5 +71,7 @@ export class CarsComponent implements OnInit {
         console.log(error);
       }
     );
+
+    window.location.reload();
   }
 }
