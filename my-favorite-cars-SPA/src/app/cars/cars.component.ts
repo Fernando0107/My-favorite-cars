@@ -24,7 +24,10 @@ export class CarsComponent implements OnInit {
   ngOnInit(): void {
     this.getCars();
     //this.postCar();
-    //this.deleteCar(1023);
+  }
+
+  anytest(te) {
+    console.log(te);
   }
 
   postCar() {
@@ -71,7 +74,6 @@ export class CarsComponent implements OnInit {
         console.log(error);
       }
     );
-
     window.location.reload();
   }
 }
