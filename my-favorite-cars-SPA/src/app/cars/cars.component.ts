@@ -17,17 +17,14 @@ export class CarsComponent implements OnInit {
   showModal: boolean;
   registerForm: FormGroup;
   submitted = false;
-  carName: string = '';
-  carBrand: string = '';
-  carUrl: string = '';
-  carMotor: string = '';
-  carModel: string = '';
-
+  Cars: string[] = ['name', 'brand', 'model', 'url', 'motor'];
+  _id: any;
   // Constructor
   constructor(private http: HttpClient, private formBuilder: FormBuilder) {}
 
-  show() {
+  show(id) {
     this.showModal = true; // Show-Hide Model Check
+    this._id = id;
   }
 
   hide() {
@@ -94,28 +91,9 @@ export class CarsComponent implements OnInit {
       }
     );
   }
-  testx(
-    _car: string,
-    _brand: string,
-    _model: string,
-    _url: string,
-    _motor: string
-  ) {
-    console.log('HELLO');
-    console.log(_car);
-    console.log(_brand);
-    console.log(_model);
-    console.log(_url);
-    console.log(_motor);
-
-    this.submitted = true;
-
-    if (this.submitted) {
-      this.showModal = false;
-    }
-  }
 
   deleteCar(id) {
+    console.log(id);
     this.http.delete<any>(this.cars_url + id).subscribe(
       (res) => {
         this.alm = res.id;
@@ -127,23 +105,16 @@ export class CarsComponent implements OnInit {
     window.location.reload();
   }
 
-  updateCar(
-    id,
-    car: string,
-    _brand: string,
-    _model: string,
-    _url: string,
-    _motor: string
-  ) {
+  updateCar(form) {
     this.submitted = true;
 
     this.http
-      .put<any>(this.cars_url + id, {
-        name: car,
-        brand: _brand,
-        model: _model,
-        url: _url,
-        motor: _motor,
+      .put<any>(this.cars_url + this._id, {
+        name: form.value.name,
+        brand: form.value.brand,
+        model: form.value.modelo,
+        url: form.value.url,
+        motor: form.value.motor,
       })
       .subscribe(
         (resp) => {
@@ -157,5 +128,14 @@ export class CarsComponent implements OnInit {
     if (this.submitted) {
       this.showModal = false;
     }
+    window.location.reload();
+  }
+
+  onSubmit(form) {
+    console.log(form.value.modelo);
+  }
+
+  onSubmit2() {
+    console.log(this._id);
   }
 }

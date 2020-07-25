@@ -44,7 +44,7 @@ This is an example text that won't be displayed in the browser-->
         <p class="card-text">Motor: {{car.motor}}</p>
       </div>
         <div class="card-footer" align="center">
-            <input type="button" class="btn btn-warning btn-block" value="Edit"  style="float: left;" (click) = "show()">
+            <input type="button" class="btn btn-warning btn-block" value="Edit"  style="float: left;" (click) = "show(car.id)">
             <input type="button" class="btn btn-danger btn-block" value="Delete"  style="float: right;" (click)="deleteCar(car.id)">
         </div>
     </div>
@@ -59,23 +59,23 @@ This is an example text that won't be displayed in the browser-->
         <h4 class="modal-title" id="myModalLabel">Update</h4>
       </div>
       <div class="modal-body">
-        <form (submit)="testx(car.value, brand.value, model.value, url.value, motor.value)">
+        <form #carForm="ngForm" (ngSubmit)="updateCar(carForm)">
           <div class="row">
             <div class="col">
               <label for="exampleCarName">Car Name:</label>
-              <input #car type="text" class="form-control" placeholder="Name">
+              <input type="text" name="name" class="form-control" placeholder="Name" [(ngModel)]="model.name" required>
               <label for="exampleCarModel">Car model:</label>
-              <input #model type="text" class="form-control" placeholder="Model">
+              <input #model type="text" name="modelo" class="form-control" placeholder="Model" [(ngModel)]="model.modelo" required>
             </div>
             <div class="col">
               <label for="exampleCarBrand">Car brand:</label>
-              <input #brand type="text" class="form-control" placeholder="Brand">
+              <input #brand type="text" name="brand" class="form-control" placeholder="Brand" [(ngModel)]="model.brand" required>
               <label for="exampleCarUrl">Car motor:</label>
-              <input #motor type="text" class="form-control" placeholder="Motor">
+              <input #motor type="text" name="motor" class="form-control" placeholder="Motor" [(ngModel)]="model.motor" required>
             </div>
           </div>
           <label for="exampleCarBrand">Car Url:</label>
-          <input #url type="text" class="form-control" placeholder="Url">
+          <input #url type="text" name="url" class="form-control" placeholder="Url" [(ngModel)]="model.url" required> 
           <br>
           <button type="submit" class="btn btn-primary">Update Car!</button>
         </form>
