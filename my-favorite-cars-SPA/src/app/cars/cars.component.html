@@ -38,15 +38,51 @@ This is an example text that won't be displayed in the browser-->
 <div class="row row-cols-1 row-cols-md-5">
   <div class="col mb-4" *ngFor="let car of cars">
     <div class="card h-100">
-      <img src="{{car.url}}" class="card-img-top" alt="...">
+      <img src="{{car.url}}" alt="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Circle-icons-car.svg/1200px-Circle-icons-car.svg.png" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">{{car.name}}</h5>
         <p class="card-text">Motor: {{car.motor}}</p>
       </div>
         <div class="card-footer" align="center">
-            <input type="button" class="btn btn-warning btn-block" value="Edit"  style="float: left;">
+            <input type="button" class="btn btn-warning btn-block" value="Edit"  style="float: left;" (click) = "show()">
             <input type="button" class="btn btn-danger btn-block" value="Delete"  style="float: right;" (click)="deleteCar(car.id)">
         </div>
+    </div>
+  </div>
+</div>
+
+<!-- Creates the bootstrap modal where the image will appear -->
+<div [style.display]="showModal ? 'block' : 'none'" class="modal" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Update</h4>
+      </div>
+      <div class="modal-body">
+        <form (submit)="testx(car.value, brand.value, model.value, url.value, motor.value)">
+          <div class="row">
+            <div class="col">
+              <label for="exampleCarName">Car Name:</label>
+              <input #car type="text" class="form-control" placeholder="Name">
+              <label for="exampleCarModel">Car model:</label>
+              <input #model type="text" class="form-control" placeholder="Model">
+            </div>
+            <div class="col">
+              <label for="exampleCarBrand">Car brand:</label>
+              <input #brand type="text" class="form-control" placeholder="Brand">
+              <label for="exampleCarUrl">Car motor:</label>
+              <input #motor type="text" class="form-control" placeholder="Motor">
+            </div>
+          </div>
+          <label for="exampleCarBrand">Car Url:</label>
+          <input #url type="text" class="form-control" placeholder="Url">
+          <br>
+          <button type="submit" class="btn btn-primary">Update Car!</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click) = "hide()">Close</button>
+      </div>
     </div>
   </div>
 </div>
